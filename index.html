@@ -600,12 +600,11 @@
             
             uploadZone.innerHTML = `
                 <div class="upload-icon">🎧</div>
-                <div class="upload-text">Ready to play: ${filename}</div>
+                <div class="upload-text">Playing: ${filename}</div>
                 <div class="upload-subtext">${wordCount} words • ~${estimatedTime} min</div>
                 <div class="speech-controls" style="margin-top: 20px;">
                     <button onclick="toggleSpeech()" class="control-btn" id="playPauseBtn">⏸️ Pause</button>
-                    <button onclick="stopSpeech()" class="control-btn">⏹️ Stop</button>
-                    <button onclick="resetUpload()" class="control-btn">📄 New PDF</button>
+                    <button onclick="loadNewPDF()" class="control-btn">📄 New PDF</button>
                 </div>
                 <div class="progress-container" style="margin-top: 15px;">
                     <div class="progress-bar" id="progressBar"></div>
@@ -665,20 +664,19 @@
             }
         }
         
-        function stopSpeech() {
+        function loadNewPDF() {
+            // Stop any current speech
             speechSynthesis.cancel();
             isPlaying = false;
-            document.getElementById('playPauseBtn').textContent = '▶️ Play';
-            document.getElementById('progressBar').style.width = '0%';
-        }
-        
-        function resetUpload() {
-            speechSynthesis.cancel();
+            
+            // Reset to initial upload state
             uploadZone.innerHTML = `
                 <div class="upload-icon">📄</div>
                 <div class="upload-text">Click to upload your PDF</div>
                 <div class="upload-subtext">Maximum file size: 5MB</div>
             `;
+            
+            // Clear file input
             fileInput.value = '';
         }
         
